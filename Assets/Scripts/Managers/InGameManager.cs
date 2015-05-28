@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ResourceType : MonoBehaviour {
+public class GameManager : MonoBehaviour {
+
+    Time gameTime; 
 
 	// Use this for initialization
 	void Start () {
