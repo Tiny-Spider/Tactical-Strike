@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Unit: IDamageable, ISelectable {
+public class Unit: MonoBehaviour, IDamageable, ISelectable {
 
     int health;
     Dictionary<DamageType, int> armor = new Dictionary<DamageType, int>();
