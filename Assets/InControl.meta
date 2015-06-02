@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/InControl.meta
+guid: ffaa699efd26b074b9b99ab4c48cfd69
+folderAsset: yes
+timeCreated: 1432725560
+=======
+guid: 0a04eb8077ff34347a4c4edf7b46f017
+folderAsset: yes
+timeCreated: 1432725194
+>>>>>>> d9ad0e3546465306d16452ed286e84d5457c07b8:Assets/Scripts/Managers.meta
+licenseType: Free
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,34 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
-    public static GameManager instance { private set; get; }
+public class InGameManager : MonoBehaviour {
 
-    private Game game;
-
-    private readonly string playerNameKey = "PlayerName";
-    public string playerName;
-
-    void Awake() {
-        DontDestroyOnLoad(gameObject);
-
-        instance = this;
-    }
-
-    void Start() {
-        playerName = PlayerPrefs.GetString(playerNameKey);
-    }
-
-    void OnDestroy() {
-        PlayerPrefs.SetString(playerNameKey, playerName);
-        PlayerPrefs.Save();
-    }
-
-    public Game GetGame() {
-        if (game == null) {
-            game = new Game();
-        }
-
-        return game;
-    }
+    
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
 }
