@@ -23,4 +23,8 @@ public static class ExtensionMethods {
     public static bool EqualsIgnoreCase(this string text, string compareTo) {
         return text.Equals(compareTo, StringComparison.InvariantCultureIgnoreCase);
     }
+
+    public static bool IsEmpty(this string text) {
+        return string.IsNullOrEmpty(text) || text.Trim().Length == 0;
+    }
 }
