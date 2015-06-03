@@ -43,7 +43,7 @@ public class LobbyPlayerDisplayer : MonoBehaviour {
     }
 
     void Refresh() {
-        Game game = GameManager.instance.GetGame();
+        Game game = GameManager.instance.game;
 
         Clear();
 

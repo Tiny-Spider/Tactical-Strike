@@ -4,7 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
     public static GameManager instance { private set; get; }
 
-    private Game game;
+    public Game game { private set; get; }
 
     private readonly string playerNameKey = "PlayerName";
     public string playerName;
@@ -24,11 +24,16 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.Save();
     }
 
-    public Game GetGame() {
-        if (game == null) {
-            game = new Game();
-        }
+    // Events //
+    void OnServerInitialized() {
+        game = new Game();
+    }
 
-        return game;
+    void OnConnectedToServer() {
+        game = new Game();
+    }
+
+    void OnDisconnectedFromServer() {
+        game = null;
     }
 }

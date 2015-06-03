@@ -62,6 +62,7 @@ public class NetworkManager : MonoBehaviour {
             case NetworkConnectionError.NoError:
                 return true;
             default:
+                Debug.LogError("Connection Error: " + error);
                 return false;
         }
     }
@@ -71,6 +72,11 @@ public class NetworkManager : MonoBehaviour {
             case MasterServerEvent.HostListReceived:
                 serverList = MasterServer.PollHostList();
                 OnServerListUpdate();
+                break;
+            case MasterServerEvent.RegistrationSucceeded:
+                break;
+            default:
+                Debug.LogWarning("Master Server: " + masterEvent);
                 break;
         }
     }
@@ -107,8 +113,8 @@ public class NetworkManager : MonoBehaviour {
 
     [RPC]
     void AddPlayer(NetworkPlayer networkPlayer) {
-        Game game = GameManager.instance.GetGame();
-        game.connectedPlayers.Add(networkPlayer, new Game.PlayerData());
+        Game game = GameManager.instance.game;
+        game.connectedPlayers.Add(networkPlayer, new Game.PlayerData(networkPlayer));
         OnPlayerJoin();
     }
 
@@ -119,7 +125,7 @@ public class NetworkManager : MonoBehaviour {
 
     [RPC]
     void RemovePlayer(NetworkPlayer networkPlayer) {
-        Game game = GameManager.instance.GetGame();
+        Game game = GameManager.instance.game;
         game.connectedPlayers.Remove(networkPlayer);
         OnPlayerLeave();
     }

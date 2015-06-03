@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
+using UnityEditor;
 
 public static class UnitCreator {
     
