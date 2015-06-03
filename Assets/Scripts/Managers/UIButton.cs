@@ -1,11 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum GeneralAction
-{
-
-}
-
 
 public class UIButton : MonoBehaviour {
 
