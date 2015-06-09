@@ -2,19 +2,7 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-<<<<<<< HEAD
 
-    
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-=======
     public static GameManager instance { private set; get; }
 
     public Game game { private set; get; }
@@ -49,5 +37,4 @@ public class GameManager : MonoBehaviour {
     void OnDisconnectedFromServer() {
         game = null;
     }
->>>>>>> f7ee493b572fd84fd8ef435c41c70612f19b12cc
 }
