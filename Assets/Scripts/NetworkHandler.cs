@@ -67,6 +67,53 @@ public class NetworkHandler : MonoBehaviour {
             return;
 
         Debug.Log("[NetworkHandler] Player " + networkPlayer.ToString() + " has changed their name to \"" + name + "\"");
+        playerData.name = name;
+        OnPlayerUpdate(networkPlayer);
+    }
+
+
+    public void SetFaction(Faction faction) {
+        StartCoroutine(_SetFaction(faction));
+    }
+
+    IEnumerator _SetFaction(Faction faction) {
+        yield return new WaitForFixedUpdate();
+        _networkView.RPC("OnSetFaction", RPCMode.AllBuffered, (int) faction, Network.player);
+    }
+
+    [RPC]
+    void OnSetFaction(int _faction, NetworkPlayer networkPlayer) {
+        Game.PlayerData playerData = GameManager.instance.game.connectedPlayers[networkPlayer];
+
+        if (playerData == null)
+            return;
+
+        Faction faction = (Faction)_faction;
+        Debug.Log("[NetworkHandler] Player " + networkPlayer.ToString() + " has changed their faction to \"" + faction.ToString() + "\"");
+        playerData.faction = faction;
+        OnPlayerUpdate(networkPlayer);
+    }
+
+
+    public void SetColor(PlayerColor playerColor) {
+        StartCoroutine(_SetColor(playerColor));
+    }
+
+    IEnumerator _SetColor(PlayerColor playerColor) {
+        yield return new WaitForFixedUpdate();
+        _networkView.RPC("OnSetColor", RPCMode.AllBuffered, playerColor.id, Network.player);
+    }
+
+    [RPC]
+    void OnSetColor(int id, NetworkPlayer networkPlayer) {
+        Game.PlayerData playerData = GameManager.instance.game.connectedPlayers[networkPlayer];
+
+        if (playerData == null)
+            return;
+
+        PlayerColor color = PlayerColor.GetColor(id);
+        Debug.Log("[NetworkHandler] Player " + networkPlayer.ToString() + " has changed their color to \"" + color.color.ToString() + "\"");
+        playerData.color = color;
         OnPlayerUpdate(networkPlayer);
     }
 }

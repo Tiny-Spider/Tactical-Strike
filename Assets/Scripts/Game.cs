@@ -8,8 +8,9 @@ public class Game {
 
     public class PlayerData {
         public string name = "";
-        public int team;
+        public int team = 0;
         public Faction faction = Faction.Allied;
+        public PlayerColor color = PlayerColor.GetColor(0);
 
         public NetworkPlayer networkPlayer { private set; get; }
 
