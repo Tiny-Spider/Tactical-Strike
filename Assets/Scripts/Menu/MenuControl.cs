@@ -22,21 +22,14 @@ public class MenuControl : MonoBehaviour {
         }
     }
 
-    public void ShowPopupPanel(MenuPanel menuPanel){
-        foreach (MenuPanel _menuPanel in menuPanels)
-        {
+    public void ShowPopupPanel(MenuPanel menuPanel) {
+        foreach (MenuPanel _menuPanel in menuPanels) {
             if (_menuPanel.Equals(menuPanel))
                 menuPanel.gameObject.SetActive(true);
         }
-
     }
 
     public void HidePanel(MenuPanel menuPanel) {
         menuPanel.gameObject.SetActive(false);
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
     }
 }
