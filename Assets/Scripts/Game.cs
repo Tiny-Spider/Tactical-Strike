@@ -10,5 +10,11 @@ public class Game {
     public class PlayerData {
         public string name = "";
         public Faction faction = Faction.Allied;
+
+        public NetworkPlayer networkPlayer { private set; get; }
+
+        public PlayerData(NetworkPlayer networkPlayer) {
+            this.networkPlayer = networkPlayer;
+        }
     }
 }
