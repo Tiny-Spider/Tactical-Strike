@@ -4,15 +4,26 @@ using System.Collections.Generic;
 
 public class UnitManager : MonoBehaviour{
 
-    public Dictionary<UnitData, UnitType> unitList = new Dictionary<UnitData, UnitType>();
+    public static UnitManager instance;
+    public Dictionary<string, UnitData> unitData = new Dictionary<string, UnitData>();
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    public UnitData GetUnitData(string unitName)
+    {
+        return unitData[unitName];
+    }
 
     public void LoadUnits() {
         UnitData[] unitObjects = Resources.LoadAll<UnitData>("Units");
         foreach(UnitData _unit in unitObjects){
-            unitList.Add(_unit, _unit.unitType);
-            //[debug]print("Added " + _unit.name + " as " + _unit.unitType);
+            unitData.Add(_unit.name, _unit);
+             /*[debug]*/print("Added " + _unit.name + " as " + _unit.unitType);
         }
-        //[debug]print("The list contains " + unitList.Count + " units.");
+        /*[debug]*/print("The list contains " + unitData.Count + " units.");
     }
   
 }

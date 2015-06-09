@@ -5,4 +5,6 @@ public interface ISelectable{
     bool HasStances();
 
     CursorType GetCursorType();
+
+    void Select();
 }
