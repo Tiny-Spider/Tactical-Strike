@@ -36,7 +36,7 @@ namespace InControl
 			xInputBufferSize = serializedObject.FindProperty( "xInputBufferSize" );
 
 			var path = AssetDatabase.GetAssetPath( MonoScript.FromScriptableObject( this ) );
-			headerTexture = Resources.LoadAssetAtPath<Texture>( Path.GetDirectoryName( path ) + "/Images/InControlHeader.png" );
+			headerTexture = AssetDatabase.LoadAssetAtPath<Texture>( Path.GetDirectoryName( path ) + "/Images/InControlHeader.png" );
 		}
 
 

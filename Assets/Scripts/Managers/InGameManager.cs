@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
+public class InGameManager : MonoBehaviour {
 
-    Time gameTime; 
+    Time gameTime;
+    public UnitManager unitManager;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Awake () {
+        unitManager = GetComponent<UnitManager>();
+        unitManager.LoadUnits();
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 }

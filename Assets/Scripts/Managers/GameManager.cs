@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InGameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour {
 
     
 	// Use this for initialization
