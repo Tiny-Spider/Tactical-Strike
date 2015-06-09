@@ -6,23 +6,13 @@ using System.Collections.Generic;
 public class NetworkHandler : MonoBehaviour {
     public static NetworkHandler instance { private set; get; }
 
-    // Server
 
-    public delegate void TurnFinishedEvent(int team);
-    public event TurnFinishedEvent OnTurnFinished = delegate { };
+    public delegate void MapChangedEvent(MapData map);
+    public event MapChangedEvent OnMapChanged = delegate { };
 
-    public delegate void ScoreAddEvent(int team, int score);
-    public event ScoreAddEvent OnScoreAdd = delegate { };
+    public delegate void PlayerUpdateEvent(NetworkPlayer networkPlayer);
+    public event PlayerUpdateEvent OnPlayerUpdate = delegate { };
 
-    public delegate void ReadyEvent(int team);
-    public event ReadyEvent OnReady = delegate { };
-
-    // Client
-
-    //public delegate void TurnChangedEvent(Turn turn);
-    //public event TurnChangedEvent OnTurnChanged = delegate { };
-
-    //
 
     private NetworkView _networkView;
 
@@ -31,40 +21,52 @@ public class NetworkHandler : MonoBehaviour {
         _networkView = GetComponent<NetworkView>();
     }
 
+    void OnServerInitialized() {
+        ChangeMap(MapManager.instance.GetMaps()[0]);
+    }
 
-    //public void FinishTurn() {
-    //    NetworkManager networkManager = NetworkManager.instance;
-    //    _networkView.RPC("_FinishTurn", RPCMode.Server, networkManager.team);
-    //}
 
-    //[RPC]
-    //void _FinishTurn(int team) {
-    //    Debug.Log("Team " + team + " finished their turn");
+    public void ChangeMap(MapData map) {
+        StartCoroutine(_ChangeMap(map));
+    }
 
-    //    OnTurnFinished(team);
-    //}
+    IEnumerator _ChangeMap(MapData map) {
+        yield return new WaitForFixedUpdate();
+        _networkView.RPC("OnChangeMap", RPCMode.AllBuffered, map.sceneName);
+    }
 
-    //public void SetTurn(Turn turn) {
-    //    NetworkManager networkManager = NetworkManager.instance;
-    //    _networkView.RPC("_SetTurn", RPCMode.Server, (int) turn);
-    //}
+    [RPC]
+    void OnChangeMap(string sceneName) {
+        MapManager mapManager = MapManager.instance;
+        MapData map = mapManager.GetMapByScene(sceneName);
+        Game game = GameManager.instance.game;
 
-    //[RPC]
-    //void _SetTurn(int turn) {
-    //    Debug.Log("Turn changed: " + ((Turn) turn).ToString());
+        if (map == null)
+            return;
 
-    //    OnTurnChanged((Turn)turn);
-    //}
+        Debug.Log("[NetworkHandler] Map has been changed to: " + map.name);
+        game.map = map;
+        OnMapChanged(map);
+    }
 
-    //public void AddScore(int score) {
-    //    NetworkManager networkManager = NetworkManager.instance;
-    //    _networkView.RPC("_AddScore", RPCMode.Server, networkManager.team, score);
-    //}
 
-    //[RPC]
-    //void _AddScore(int team, int score) {
-    //    Debug.Log("Adding " + score + " score to team " + team);
+    public void SetName(string name) {
+        StartCoroutine(_SetName(name));
+    }
 
-    //    OnScoreAdd(team, score);
-    //}
+    IEnumerator _SetName(string name) {
+        yield return new WaitForFixedUpdate();
+        _networkView.RPC("OnSetName", RPCMode.AllBuffered, name, Network.player);
+    }
+
+    [RPC]
+    void OnSetName(string name, NetworkPlayer networkPlayer) {
+        Game.PlayerData playerData = GameManager.instance.game.connectedPlayers[networkPlayer];
+
+        if (playerData == null)
+            return;
+
+        Debug.Log("[NetworkHandler] Player " + networkPlayer.ToString() + " has changed their name to \"" + name + "\"");
+        OnPlayerUpdate(networkPlayer);
+    }
 }
