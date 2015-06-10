@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UnitObject : ScriptableObject {
+public class UnitData : ScriptableObject {
 
     public Unit unit;
     public UnitType unitType;
