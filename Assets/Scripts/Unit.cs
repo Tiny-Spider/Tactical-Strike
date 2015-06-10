@@ -10,7 +10,7 @@ public class Unit: MonoBehaviour, IDamageable, ISelectable {
 
 	// Use this for initialization
 	void Start () {
-	
+	    //UnitManager.instance.GetUnitData// hier was ik. op welke manier apply je unit data op de unit?
 	}
 	
 	// Update is called once per frame
@@ -33,4 +33,11 @@ public class Unit: MonoBehaviour, IDamageable, ISelectable {
     public CursorType GetCursorType() {
         throw new System.NotImplementedException();
     }
+
+    public void Select()
+    {
+        throw new System.NotImplementedException();
+    }
+
+
 }

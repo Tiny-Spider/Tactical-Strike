@@ -21,10 +21,10 @@ public class NetworkManager : MonoBehaviour {
     public delegate void ServerListUpdateEvent();
     public event ServerListUpdateEvent OnServerListUpdate = delegate { };
 
-    public delegate void PlayerJoinedEvent();
+    public delegate void PlayerJoinedEvent(NetworkPlayer networkPlayer);
     public event PlayerJoinedEvent OnPlayerJoin = delegate { };
 
-    public delegate void PlayerLeftEvent();
+    public delegate void PlayerLeftEvent(NetworkPlayer networkPlayer);
     public event PlayerLeftEvent OnPlayerLeave = delegate { };
 
     private NetworkView _networkView;
@@ -113,9 +113,11 @@ public class NetworkManager : MonoBehaviour {
 
     [RPC]
     void AddPlayer(NetworkPlayer networkPlayer) {
+        Debug.Log("[NetworkManager] Added player: " + networkPlayer.ToString());
+
         Game game = GameManager.instance.game;
         game.connectedPlayers.Add(networkPlayer, new Game.PlayerData(networkPlayer));
-        OnPlayerJoin();
+        OnPlayerJoin(networkPlayer);
     }
 
     IEnumerator _RemovePlayer(NetworkPlayer networkPlayer) {
@@ -125,8 +127,10 @@ public class NetworkManager : MonoBehaviour {
 
     [RPC]
     void RemovePlayer(NetworkPlayer networkPlayer) {
+        Debug.Log("[NetworkManager] Removed player: " + networkPlayer.ToString());
+
         Game game = GameManager.instance.game;
         game.connectedPlayers.Remove(networkPlayer);
-        OnPlayerLeave();
+        OnPlayerLeave(networkPlayer);
     }
 }

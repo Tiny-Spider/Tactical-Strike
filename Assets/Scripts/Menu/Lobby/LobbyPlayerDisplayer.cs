@@ -12,26 +12,22 @@ public class LobbyPlayerDisplayer : MonoBehaviour {
 
     void Awake() {
         Clear();
-    }
 
-    void Start() {
         NetworkManager networkManager = NetworkManager.instance;
-
-        if (!networkManager)
-            return;
-
         networkManager.OnPlayerJoin += Refresh;
         networkManager.OnPlayerLeave += Refresh;
+
+        NetworkHandler networkHandler = NetworkHandler.instance;
+        networkHandler.OnPlayerUpdate += Refresh;
     }
 
     void OnDestroy() {
         NetworkManager networkManager = NetworkManager.instance;
-
-        if (!networkManager)
-            return;
-
         networkManager.OnPlayerJoin -= Refresh;
         networkManager.OnPlayerLeave -= Refresh;
+
+        NetworkHandler networkHandler = NetworkHandler.instance;
+        networkHandler.OnPlayerUpdate -= Refresh;
     }
 
     void Clear() {
@@ -42,7 +38,7 @@ public class LobbyPlayerDisplayer : MonoBehaviour {
         }
     }
 
-    void Refresh() {
+    void Refresh(NetworkPlayer networkPlayer) {
         Game game = GameManager.instance.game;
 
         Clear();

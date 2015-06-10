@@ -5,15 +5,13 @@ using System.Collections;
 [RequireComponent(typeof(LayoutGroup))]
 public class ServerListDisplayer : MonoBehaviour {
     public ServerListEntry entryPrefab;
-    //
+    
     public Color colorEven;
     public Color colorOdd;
 
     void Awake() {
         Clear();
-    }
 
-    void Start() {
         NetworkManager networkManager = NetworkManager.instance;
         networkManager.OnServerListUpdate += Refresh;
     }

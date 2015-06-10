@@ -71,6 +71,10 @@ public class MenuUtil : MonoBehaviour {
         Network.Disconnect();
     }
 
+    public void StartGame() {
+        NetworkManager.instance.StartGame();
+    }
+
     // Events
 
     void OnServerInitialized() {
