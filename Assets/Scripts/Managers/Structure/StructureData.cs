@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StructureData : MonoBehaviour {
+public class StructureData : ScriptableObject {
     public Structure structure;
 
     public UnitCreation[] units;
@@ -11,11 +11,13 @@ public class StructureData : MonoBehaviour {
         }
     }
 
+    [System.Serializable]
 	public struct UnitCreation {
         public UnitData unitData;
         public int buildTime;
         public Cost[] cost; 
 
+        [System.Serializable]
         public struct Cost {
             public ResourceType resource;
             public int amount;

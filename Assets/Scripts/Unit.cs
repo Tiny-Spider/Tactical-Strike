@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Unit: MonoBehaviour, IDamageable, ISelectable {
 
+    int unitID;
     int health;
     Dictionary<DamageType, int> armor = new Dictionary<DamageType, int>();
     NavMeshAgent navMesh;
@@ -17,6 +18,10 @@ public class Unit: MonoBehaviour, IDamageable, ISelectable {
 	void Update () {
 	
 	}
+
+    void initialize() {
+
+    }
 
     public int Gethealth() {
         throw new System.NotImplementedException();
