@@ -87,8 +87,8 @@ public class NetworkManager : MonoBehaviour {
 
     [RPC]
     void _StartGame() {
-        // TODO: change
-        Application.LoadLevel(Network.isServer ? serverScene : clientScene);
+        Game game = GameManager.instance.game;
+        Application.LoadLevel(game.map.sceneName);
     }
 
 
