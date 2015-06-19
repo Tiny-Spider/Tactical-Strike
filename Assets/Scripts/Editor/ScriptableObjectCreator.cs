@@ -15,4 +15,12 @@ public static class ScriptableObjectCreator {
         MapData map = ScriptableObject.CreateInstance<MapData>();
         ProjectWindowUtil.CreateAsset(map, "Assets/Resources/Maps/New Map.asset");
     }
+
+
+    [MenuItem("Assets/Create/Structure")]
+    public static void CreateStructure() {
+        StructureData map = ScriptableObject.CreateInstance<StructureData>();
+        ProjectWindowUtil.CreateAsset(map, "Assets/Resources/Structures/New Structure.asset");
+    }
+
 }
