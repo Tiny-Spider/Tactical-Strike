@@ -34,6 +34,11 @@ public class Structure : MonoBehaviour, IDamageable, ISelectable {
     public void Select() {
         throw new System.NotImplementedException();
     }
+
+    public void AddToSelection()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 [System.Serializable]

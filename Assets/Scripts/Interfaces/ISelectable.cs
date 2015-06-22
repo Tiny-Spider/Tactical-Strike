@@ -7,4 +7,6 @@ public interface ISelectable{
     CursorType GetCursorType();
 
     void Select();
+
+    void AddToSelection();
 }
