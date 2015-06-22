@@ -2,15 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PoolManager : MonoBehaviour {
+public static class PoolManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public Dictionary<string, Unit> unitPool = new Dictionary<string, Unit>();
+    public Dictionary<string, Structure> structurePool = new Dictionary<string, Structure>();
+
+    //public void Get
 }

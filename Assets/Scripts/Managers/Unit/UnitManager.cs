@@ -21,13 +21,16 @@ public class UnitManager : MonoBehaviour{
         return unitData[unitName];
     }
 
+    /// <summary>
+    /// Used to initialize the unit data from the resources/units folder.
+    /// </summary>
     public void LoadUnits() {
         UnitData[] unitObjects = Resources.LoadAll<UnitData>("Units");
         foreach(UnitData _unit in unitObjects){
             unitData.Add(_unit.name, _unit);
-             /*[debug]*/print("Added " + _unit.name + " as " + _unit.name);
+             ///*[debug]*/print("Added " + _unit.name + " as " + _unit.name);
         }
-        /*[debug]*/print("The list contains " + unitData.Count + " units.");
+        ///*[debug]*/print("The list contains " + unitData.Count + " units.");
     }
 
     public void SpawnUnit(string unitName) {
