@@ -4,6 +4,9 @@ using System.Collections;
 public class BuildManager : MonoBehaviour {
     public BuildMeshCreator buildMeshCreator;
 
+    public delegate void StructureBuildEvent(Structure structure);
+    public event StructureBuildEvent OnStructureBuild = delegate { };
+
     public LayerMask noBuild;
     public LayerMask terrain;
 
@@ -13,7 +16,7 @@ public class BuildManager : MonoBehaviour {
     private Vector2 cantBuildUp = new Vector2(1, 0);
 
     private Structure structure;
-    private Vector2 buildSelection;
+    private Vector2 structureSize;
 
     private bool building = false;
 
@@ -21,13 +24,13 @@ public class BuildManager : MonoBehaviour {
         Debug.Log("[BuildManager] Starting building of: " + structure.displayName);
 
         this.structure = structure;
-        buildSelection = structure.size;
+        structureSize = structure.size;
 
-        buildMeshCreator.CreatePlane((int)buildSelection.x, (int)buildSelection.y);
+        buildMeshCreator.CreatePlane((int)structureSize.x, (int)structureSize.y);
 
-        for (int y = 0; y < buildSelection.y; y++) {
-            for (int x = 0; x < buildSelection.x; x++) {
-                buildMeshCreator.UpdateGrid(new Vector2(x, y), (y == buildSelection.y - 1) ? canBuildUp : canBuild);
+        for (int y = 0; y < structureSize.y; y++) {
+            for (int x = 0; x < structureSize.x; x++) {
+                buildMeshCreator.UpdateGrid(new Vector2(x, y), (y == structureSize.y - 1) ? canBuildUp : canBuild);
             }
         }
 
@@ -57,5 +60,17 @@ public class BuildManager : MonoBehaviour {
 
             transform.position = point;
         }
+
+        if (Input.GetButtonDown("Fire1")) {
+            EndBuild();
+        }
+    }
+
+    void EndBuild() {
+        building = false;
+        buildMeshCreator.meshFilter.mesh = null;
+
+        Structure structure = Network.Instantiate(this.structure, (transform.position - new Vector3(structureSize.x / 2, 0, structureSize.y / 2)), Quaternion.identity, 0) as Structure;
+        OnStructureBuild(structure);
     }
 }

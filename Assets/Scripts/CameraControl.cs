@@ -33,11 +33,11 @@ public class CameraControl : MonoBehaviour {
         Vector3 delta = Input.mousePosition - mMouse;
         mMouse = Input.mousePosition;
 
-        if (enableDragRotate && Input.GetMouseButton(0)) {
+        if (enableDragRotate && Input.GetButton("Fire1")) {
             mTargetEuler.y += Time.deltaTime * 10f * delta.x;
         }
 
-        if (enableDragMove && Input.GetMouseButton(1)) {
+        if (enableDragMove && Input.GetButton("Fire2")) {
             Vector3 dir = transform.rotation * Vector3.forward;
             dir.y = 0f;
             dir.Normalize();

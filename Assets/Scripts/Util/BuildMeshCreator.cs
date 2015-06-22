@@ -21,7 +21,9 @@ public class BuildMeshCreator : MonoBehaviour {
     private float _gridHalfHeight;
 
     private Vector2 offset;
-    private MeshFilter meshFilter;
+
+    [HideInInspector]
+    public MeshFilter meshFilter;
 
     void Awake() {
         meshFilter = GetComponent<MeshFilter>();
