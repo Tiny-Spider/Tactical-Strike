@@ -22,7 +22,7 @@ public class NetworkHandler : MonoBehaviour {
     }
 
     void OnServerInitialized() {
-        ChangeMap(MapManager.instance.GetMaps()[0]);
+        ChangeMap(MapManager.GetMaps()[0]);
     }
 
 
@@ -37,8 +37,7 @@ public class NetworkHandler : MonoBehaviour {
 
     [RPC]
     void OnChangeMap(string sceneName) {
-        MapManager mapManager = MapManager.instance;
-        MapData map = mapManager.GetMapByScene(sceneName);
+        MapData map = MapManager.GetMapByScene(sceneName);
         Game game = GameManager.instance.game;
 
         if (map == null)
@@ -78,17 +77,17 @@ public class NetworkHandler : MonoBehaviour {
 
     IEnumerator _SetFaction(Faction faction) {
         yield return new WaitForFixedUpdate();
-        _networkView.RPC("OnSetFaction", RPCMode.AllBuffered, (int) faction, Network.player);
+        _networkView.RPC("OnSetFaction", RPCMode.AllBuffered, faction.techName, Network.player);
     }
 
     [RPC]
-    void OnSetFaction(int _faction, NetworkPlayer networkPlayer) {
+    void OnSetFaction(string techName, NetworkPlayer networkPlayer) {
         Game.PlayerData playerData = GameManager.instance.game.connectedPlayers[networkPlayer];
 
         if (playerData == null)
             return;
 
-        Faction faction = (Faction)_faction;
+        Faction faction = FactionManager.GetFaction(techName);
         Debug.Log("[NetworkHandler] Player " + networkPlayer.ToString() + " has changed their faction to \"" + faction.ToString() + "\"");
         playerData.faction = faction;
         OnPlayerUpdate(networkPlayer);

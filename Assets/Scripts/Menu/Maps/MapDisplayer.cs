@@ -32,8 +32,7 @@ public class MapDisplayer : MonoBehaviour {
     }
 
     void Refresh() {
-        MapManager mapManager = MapManager.instance;
-        List<MapData> maps = mapManager.GetMaps();
+        List<MapData> maps = MapManager.GetMaps();
 
         Clear();
 
