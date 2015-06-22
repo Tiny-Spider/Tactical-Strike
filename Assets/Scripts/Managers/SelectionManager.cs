@@ -21,7 +21,7 @@ public class SelectionManager : MonoBehaviour {
     void Update() {
         
         //On click
-        if (Input.GetAxis("Fire1") > 0 && !click)
+        if (Input.GetButtonDown("Fire1"))
         {
             bool addToSelection = Input.GetButton("KeyModifier1");
             click = true;
@@ -34,13 +34,11 @@ public class SelectionManager : MonoBehaviour {
             {
                 Debug.Log("Unit hit " + _unit.name);
                 //needs team check.
+                //if(_unit.team.Equals()) check if clicked unit belongs to player
 
             }
         }
-        else if (Input.GetAxis("Fire1") <= 0)
-        {
-            click = false;
-        }
+
 
     }
 	

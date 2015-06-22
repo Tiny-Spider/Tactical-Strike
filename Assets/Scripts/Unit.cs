@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Unit: MonoBehaviour, IDamageable, ISelectable {
 
+    public int team;
     public string techName;
     public string displayName;
 
