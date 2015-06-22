@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PoolManager : MonoBehaviour {
 
-    public Dictionary<string, Unit> unitPool = new Dictionary<string, Unit>();
+    public Dictionary<string, Unit> unitPoolActive = new Dictionary<string, Unit>();
     public Dictionary<string, Structure> structurePool = new Dictionary<string, Structure>();
 
     public Unit GetUnit(string unitName) {
