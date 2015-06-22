@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class Unit: MonoBehaviour, IDamageable, ISelectable {
 
+    public string techName;
+    public string displayName;
+
+    public Texture2D image;
+    public float baseDamage, baseMovementSpeed, baseAttackRange;
+    public State[] state;
+
     int unitID;
     int health;
     Dictionary<DamageType, int> armor = new Dictionary<DamageType, int>();
@@ -39,10 +46,7 @@ public class Unit: MonoBehaviour, IDamageable, ISelectable {
         throw new System.NotImplementedException();
     }
 
-    public void Select()
-    {
+    public void Select() {
         throw new System.NotImplementedException();
     }
-
-
 }

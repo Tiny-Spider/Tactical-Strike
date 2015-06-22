@@ -2,39 +2,31 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class UnitManager : MonoBehaviour{
+public class UnitManager : MonoBehaviour {
+    private static List<Unit> units;
 
-    public static UnitManager instance;
-    public Dictionary<string, UnitData> unitData = new Dictionary<string, UnitData>();
-    public Dictionary<int, Unit> unitList = new Dictionary<int, Unit>();
+    void Start() {
+        Unit[] units = Resources.LoadAll<Unit>("Units");
 
-    public static int globalUnitID;
-
-
-    void Awake()
-    {
-        instance = this;
-    }
-
-    public UnitData GetUnitData(string unitName)
-    {
-        return unitData[unitName];
-    }
-
-    public void LoadUnits() {
-        UnitData[] unitObjects = Resources.LoadAll<UnitData>("Units");
-        foreach(UnitData _unit in unitObjects){
-            unitData.Add(_unit.name, _unit);
-             /*[debug]*/print("Added " + _unit.name + " as " + _unit.name);
+        if (units.Length <= 0) {
+            Debug.LogError("No units were loaded!");
         }
-        /*[debug]*/print("The list contains " + unitData.Count + " units.");
+
+        UnitManager.units = new List<Unit>(units);
     }
 
-    public void SpawnUnit(string unitName) {
-
+    public static List<Unit> GetUnits() {
+        return units;
     }
 
-    public void SpawnUnit(string unitName, int amount) {
+    public static Unit GetUnit(string techName) {
+        foreach (Unit unit in units) {
+            if (unit.techName == techName) {
+                return unit;
+            }
+        }
 
+        Debug.LogError("Unit not found by techName! techName: \"" + techName + "\"");
+        return null;
     }
 }

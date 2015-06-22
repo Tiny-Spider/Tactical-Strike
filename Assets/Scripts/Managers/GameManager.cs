@@ -27,14 +27,17 @@ public class GameManager : MonoBehaviour {
 
     // Events //
     void OnServerInitialized() {
+        Debug.Log("[GameManager] Starting new game!");
         game = new Game();
     }
 
     void OnConnectedToServer() {
+        Debug.Log("[GameManager] Starting new game!");
         game = new Game();
     }
 
     void OnDisconnectedFromServer() {
+        Debug.Log("[GameManager] Deleting game!");
         game = null;
     }
 }
