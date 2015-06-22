@@ -14,7 +14,7 @@ public class LobbyPlayerEntry : MonoBehaviour {
     public Button colorButton;
     public Combobox colorCombobox;
 
-    private Game.PlayerData playerData;
+    private Player playerData;
 
     public void Start() {
         if (!Network.isServer || Network.player == playerData.networkPlayer) {
@@ -31,7 +31,7 @@ public class LobbyPlayerEntry : MonoBehaviour {
         }
     }
 
-    public void Initalize(Game.PlayerData playerData) {
+    public void Initalize(Player playerData) {
         this.playerData = playerData;
 
         playerFaction.text = playerData.faction.ToString();
@@ -43,8 +43,8 @@ public class LobbyPlayerEntry : MonoBehaviour {
         factionButton.gameObject.SetActive(true);
         colorButton.gameObject.SetActive(true);
 
-        foreach (Faction faction in Enum.GetValues(typeof(Faction))) {
-            factionCombobox.Add(faction.ToString(), faction.ToString(), () =>
+        foreach (Faction faction in FactionManager.GetFactions()) {
+            factionCombobox.Add(faction.techName, faction.displayName, () =>
             {
                 NetworkHandler.instance.SetFaction(faction);
             });

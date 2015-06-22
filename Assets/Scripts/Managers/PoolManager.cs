@@ -12,7 +12,7 @@ public class PoolManager : MonoBehaviour {
     }
 
     public Unit[] GetUnits(string unitName, int amount) {
-        List<Unit> tempUnitArray;
+        List<Unit> tempUnitArray = new List<Unit>();
         Unit tempUnit = unitPool[unitName];
         for (int i = 0; i < amount; i++)
         {
