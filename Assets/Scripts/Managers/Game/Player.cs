@@ -57,4 +57,8 @@ public class Player {
 
         return true;
     }
+
+    public Dictionary<ResourceType, int> GetResources() {
+        return resources;
+    }
 }
