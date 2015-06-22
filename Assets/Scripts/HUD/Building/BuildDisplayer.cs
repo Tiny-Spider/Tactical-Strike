@@ -30,11 +30,13 @@ public class BuildDisplayer : MonoBehaviour {
         Player player = game.GetPlayer();
         Faction faction = player.faction;
 
-        foreach (Faction.StructureCreation structureCreation in faction.structures) {
+        foreach (StructureCreation structureCreation in faction.structures) {
             BuildEntry entry = Instantiate(entryPrefab);
             Structure structure = structureCreation.structure;
-
+            bool canBuild = player.HasResources(structureCreation.cost);
+            
             entry.Initalize(structure, () => { buildManager.StartBuild(structure); });
+            entry.SetActive(canBuild);
             entry.transform.SetParent(transform);
         }
     }

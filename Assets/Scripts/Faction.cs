@@ -7,9 +7,11 @@ public class Faction : ScriptableObject {
 
     public StructureCreation[] structures;
 
-    [System.Serializable]
-    public struct StructureCreation {
-        public Structure structure;
-        public string[] requiredStructures;
-    }
+}
+
+[System.Serializable]
+public struct StructureCreation {
+    public Structure structure;
+    public Cost[] cost;
+    public string[] requiredStructures;
 }
