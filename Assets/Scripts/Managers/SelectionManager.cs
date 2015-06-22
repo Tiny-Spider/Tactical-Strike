@@ -13,5 +13,15 @@ public class SelectionManager : MonoBehaviour {
 	{
 		instance = this;
 	}
+
+    void Update() {
+        bool click = false;
+        //On click
+        if (Input.GetAxis("Fire1") > 0 && !click)
+        {
+            
+        }
+
+    }
 	
 }
