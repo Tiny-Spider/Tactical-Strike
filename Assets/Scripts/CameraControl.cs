@@ -4,16 +4,22 @@ using System.Collections;
 public class CameraControl : MonoBehaviour {
     public float screenMovePercentage = 0.1f;
     public float moveSpeed = 1f;
+    public Camera camera;
 
     public Vector2 maxConstraints;
     public Vector2 minConstraints;
 
-    public bool enableDragRotate, enableDragMove, enableCursorMove;
+    public bool enableDragRotate, enableDragMove, enableCursorMove, enableFocusZoom;
 
     Transform mTrans;
     Vector3 mMouse;
     Vector3 mTargetPos;
     Vector3 mTargetEuler;
+
+    Quaternion normalCameraRot;
+    Quaternion focusCameraRot = Quaternion.Euler(90, 0, 0);
+
+    bool focusZoom = false;
 
     float leftPixels, upPixels, rightPixels, downPixels;
 
@@ -27,6 +33,8 @@ public class CameraControl : MonoBehaviour {
         rightPixels = Screen.width * (1.0f - screenMovePercentage);
         upPixels = Screen.height * screenMovePercentage;
         downPixels = Screen.height * (1.0f - screenMovePercentage);
+
+        normalCameraRot = camera.transform.rotation;
     }
 
     void Update() {
@@ -59,6 +67,18 @@ public class CameraControl : MonoBehaviour {
                 distance.z = mMouse.y < upPixels ? -moveSpeed : moveSpeed;
 
             mTargetPos += rot * distance;
+        }
+
+        if (enableFocusZoom && Input.GetButtonDown("Focus")) {
+            if (!focusZoom) {
+                camera.transform.rotation = focusCameraRot;
+                camera.orthographic = true;
+            } else {
+                camera.transform.rotation = normalCameraRot;
+                camera.orthographic = false;
+            }
+
+            focusZoom = !focusZoom;
         }
 
         mTargetPos.x = Mathf.Clamp(mTargetPos.x, minConstraints.x, maxConstraints.x);
