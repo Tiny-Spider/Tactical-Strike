@@ -45,7 +45,7 @@ public class LobbyPlayerDisplayer : MonoBehaviour {
 
         int current = 0;
 
-        foreach (var player in game.connectedPlayers) {
+        foreach (var player in game.GetPlayers()) {
             LobbyPlayerEntry entry = Instantiate(entryPrefab);
             entry.Initalize(player.Value);
             entry.transform.SetParent(transform);

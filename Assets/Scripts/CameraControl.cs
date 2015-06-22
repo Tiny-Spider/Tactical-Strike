@@ -4,6 +4,10 @@ using System.Collections;
 public class CameraControl : MonoBehaviour {
     public float screenMovePercentage = 0.1f;
     public float moveSpeed = 1f;
+
+    public Vector2 maxConstraints;
+    public Vector2 minConstraints;
+
     public bool enableDragRotate, enableDragMove, enableCursorMove;
 
     Transform mTrans;
@@ -56,6 +60,9 @@ public class CameraControl : MonoBehaviour {
 
             mTargetPos += rot * distance;
         }
+
+        mTargetPos.x = Mathf.Clamp(mTargetPos.x, minConstraints.x, maxConstraints.x);
+        mTargetPos.z = Mathf.Clamp(mTargetPos.z, minConstraints.y, maxConstraints.y);
 
         float deltaTime = Time.deltaTime * 8f;
         mTrans.position = Vector3.Lerp(mTrans.position, mTargetPos, deltaTime);

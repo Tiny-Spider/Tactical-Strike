@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Structure : MonoBehaviour, IDamageable, ISelectable {
-    public Structure structure;
     public string techName;
+    public string displayName;
+    public Sprite image;
+    public Vector2 size;
 
     public UnitCreation[] units;
     public bool hasUnits {
@@ -46,10 +48,4 @@ public struct UnitCreation {
     public Unit unit;
     public int buildTime;
     public Cost[] cost;
-
-    [System.Serializable]
-    public struct Cost {
-        public ResourceType resource;
-        public int amount;
-    }
 }

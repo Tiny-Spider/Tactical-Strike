@@ -88,7 +88,9 @@ public class NetworkManager : MonoBehaviour {
     [RPC]
     void _StartGame() {
         Game game = GameManager.instance.game;
-        Application.LoadLevel(game.map.sceneName);
+        MapData mapData = game.GetMap();
+
+        Application.LoadLevel(mapData.sceneName);
     }
 
 
@@ -116,7 +118,7 @@ public class NetworkManager : MonoBehaviour {
         Debug.Log("[NetworkManager] Added player: " + networkPlayer.ToString());
 
         Game game = GameManager.instance.game;
-        game.connectedPlayers.Add(networkPlayer, new Game.PlayerData(networkPlayer));
+        game.AddPlayer(networkPlayer);
         OnPlayerJoin(networkPlayer);
     }
 
@@ -130,7 +132,7 @@ public class NetworkManager : MonoBehaviour {
         Debug.Log("[NetworkManager] Removed player: " + networkPlayer.ToString());
 
         Game game = GameManager.instance.game;
-        game.connectedPlayers.Remove(networkPlayer);
+        game.RemovePlayer(networkPlayer);
         OnPlayerLeave(networkPlayer);
     }
 }

@@ -3,8 +3,8 @@ using System.Collections;
 
 public class MapData : ScriptableObject {
     public Sprite image;
-    public string name;
     public string sceneName;
+    public string displayName;
     public int maxPlayers;
 
     public string GetInfo() {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor;
+using System.Collections;
 
 public static class ScriptableObjectCreator {
 
@@ -8,5 +8,11 @@ public static class ScriptableObjectCreator {
     public static void CreateMap() {
         MapData map = ScriptableObject.CreateInstance<MapData>();
         ProjectWindowUtil.CreateAsset(map, "Assets/Resources/Maps/New Map.asset");
+    }
+
+    [MenuItem("Assets/Create/Faction")]
+    public static void CreateFaction() {
+        Faction faction = ScriptableObject.CreateInstance<Faction>();
+        ProjectWindowUtil.CreateAsset(faction, "Assets/Resources/Factions/New Faction.asset");
     }
 }

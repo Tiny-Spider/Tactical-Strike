@@ -44,7 +44,7 @@ public class NetworkHandler : MonoBehaviour {
             return;
 
         Debug.Log("[NetworkHandler] Map has been changed to: " + map.name);
-        game.map = map;
+        game.SetMap(map);
         OnMapChanged(map);
     }
 
@@ -60,7 +60,7 @@ public class NetworkHandler : MonoBehaviour {
 
     [RPC]
     void OnSetName(string name, NetworkPlayer networkPlayer) {
-        Game.PlayerData playerData = GameManager.instance.game.connectedPlayers[networkPlayer];
+        Player playerData = GameManager.instance.game.GetPlayer(networkPlayer);
 
         if (playerData == null)
             return;
@@ -82,7 +82,7 @@ public class NetworkHandler : MonoBehaviour {
 
     [RPC]
     void OnSetFaction(string techName, NetworkPlayer networkPlayer) {
-        Game.PlayerData playerData = GameManager.instance.game.connectedPlayers[networkPlayer];
+        Player playerData = GameManager.instance.game.GetPlayer(networkPlayer);
 
         if (playerData == null)
             return;
@@ -105,7 +105,7 @@ public class NetworkHandler : MonoBehaviour {
 
     [RPC]
     void OnSetColor(int id, NetworkPlayer networkPlayer) {
-        Game.PlayerData playerData = GameManager.instance.game.connectedPlayers[networkPlayer];
+        Player playerData = GameManager.instance.game.GetPlayer(networkPlayer);
 
         if (playerData == null)
             return;
