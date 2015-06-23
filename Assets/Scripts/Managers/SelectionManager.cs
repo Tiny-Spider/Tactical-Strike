@@ -21,7 +21,7 @@ public class SelectionManager : MonoBehaviour {
     void Update() {
         
         //On click
-        if (Input.GetAxis("Fire1") > 0 && !click)
+        if (Input.GetButtonDown("Fire1"))
         {
             bool addToSelection = Input.GetButton("KeyModifier1");
             click = true;
@@ -29,18 +29,18 @@ public class SelectionManager : MonoBehaviour {
             RaycastHit hit;
 
             Physics.Raycast(ray, out hit);
-            Unit _unit = hit.collider.gameObject.GetComponent<Unit>();
-            if (_unit)
+
+            ISelectable _selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+            if (_selectable != null)
             {
-                Debug.Log("Unit hit " + _unit.name);
-                //needs team check.
+                //Checks if units belongs to players team.
+                //_selectable.GetRTSObject
 
             }
         }
-        else if (Input.GetAxis("Fire1") <= 0)
-        {
-            click = false;
-        }
+    }
+
+    public void UnitClick() {
 
     }
 	
