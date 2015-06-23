@@ -6,7 +6,6 @@ public class Faction : ScriptableObject {
     public string displayName;
 
     public StructureCreation[] structures;
-
 }
 
 [System.Serializable]

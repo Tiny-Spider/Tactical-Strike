@@ -17,11 +17,13 @@ public class BuildMeshCreator : MonoBehaviour {
     private int _gridWidth;
     private int _gridHeight;
 
-    private float _gridHalfWidth;
-    private float _gridHalfHeight;
+    //private float _gridHalfWidth;
+    //private float _gridHalfHeight;
 
     private Vector2 offset;
-    private MeshFilter meshFilter;
+
+    [HideInInspector]
+    public MeshFilter meshFilter;
 
     void Awake() {
         meshFilter = GetComponent<MeshFilter>();
@@ -46,8 +48,8 @@ public class BuildMeshCreator : MonoBehaviour {
         _gridWidth = gridWidth;
         _gridHeight = gridHeight;
 
-        _gridHalfWidth = _gridWidth / 2.0F;
-        _gridHalfHeight = _gridHeight / 2.0F;
+        //_gridHalfWidth = _gridWidth / 2.0F;
+        //_gridHalfHeight = _gridHeight / 2.0F;
 
         Mesh mesh = new Mesh();
         meshFilter.mesh = mesh;
@@ -82,8 +84,8 @@ public class BuildMeshCreator : MonoBehaviour {
     }
 
     private void AddVertices(int tileHeight, int tileWidth, int y, int x, ICollection<Vector3> vertices) {
-        x = x - (int)_gridHalfWidth;
-        y = y - (int)_gridHalfHeight;
+        //x = x - (int)_gridHalfWidth;
+        //y = y - (int)_gridHalfHeight;
 
         vertices.Add(new Vector3((x * tileWidth), 0, (y * tileHeight)));
         vertices.Add(new Vector3((x * tileWidth) + tileWidth, 0, (y * tileHeight)));

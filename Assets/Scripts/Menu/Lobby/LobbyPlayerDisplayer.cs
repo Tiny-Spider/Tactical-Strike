@@ -43,6 +43,8 @@ public class LobbyPlayerDisplayer : MonoBehaviour {
 
         Clear();
 
+        Debug.Log("[LobbyPlayerDisplayer] Refresh");
+
         int current = 0;
 
         foreach (var player in game.GetPlayers()) {

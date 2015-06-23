@@ -42,6 +42,9 @@ public class Combobox : MonoBehaviour {
     }
 
     public void Clear() {
+        if (!content)
+            return;
+
         ComboboxEntry[] entries = content.GetComponentsInChildren<ComboboxEntry>();
 
         foreach (ComboboxEntry entry in entries) {

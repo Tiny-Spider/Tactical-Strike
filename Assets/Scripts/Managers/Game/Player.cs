@@ -4,13 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Player {
+    public delegate void ResourcesChangedEvent();
+    public event ResourcesChangedEvent OnResourcesChanged = delegate { };
+
+    public delegate void StructureBuildEvent(Structure structure);
+    public event StructureBuildEvent OnStructureBuild = delegate { };
+
+
     public string name = "";
     public int team = 0;
     public Faction faction = FactionManager.GetFactions()[0];
     public PlayerColor color = PlayerColor.GetColor(0);
-
-    public delegate void ResourcesChangedEvent();
-    public event ResourcesChangedEvent OnResourcesChanged = delegate { };
 
     private Dictionary<ResourceType, int> resources = new Dictionary<ResourceType, int>();
     private List<Structure> structures = new List<Structure>();
@@ -56,5 +60,13 @@ public class Player {
         }
 
         return true;
+    }
+
+    public Dictionary<ResourceType, int> GetResources() {
+        return resources;
+    }
+
+    public void CallStructureBuild(Structure structure) {
+        OnStructureBuild(structure);
     }
 }

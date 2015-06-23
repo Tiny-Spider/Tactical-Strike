@@ -7,31 +7,32 @@ public class BuildManager : MonoBehaviour {
     public LayerMask noBuild;
     public LayerMask terrain;
 
-    private Vector2 canBuild = new Vector2(0, 1);
-    private Vector2 cantBuild = new Vector2(1, 1);
-    private Vector2 canBuildUp = new Vector2(0, 0);
-    private Vector2 cantBuildUp = new Vector2(1, 0);
+    private Vector2 allowBuild = new Vector2(0, 1);
+    private Vector2 disallowBuild = new Vector2(1, 1);
+    private Vector2 allowBuildUp = new Vector2(0, 0);
+    private Vector2 disallowBuildUp = new Vector2(1, 0);
 
     private Structure structure;
-    private Vector2 buildSelection;
+    private Vector2 structureSize;
 
     private bool building = false;
+    private bool canBuild = false;
+
+
+    private Player player;
+
+    void Start() {
+        player = GameManager.instance.game.GetPlayer();
+    }
 
     public void StartBuild(Structure structure) {
         Debug.Log("[BuildManager] Starting building of: " + structure.displayName);
 
         this.structure = structure;
-        buildSelection = structure.size;
-
-        buildMeshCreator.CreatePlane((int)buildSelection.x, (int)buildSelection.y);
-
-        for (int y = 0; y < buildSelection.y; y++) {
-            for (int x = 0; x < buildSelection.x; x++) {
-                buildMeshCreator.UpdateGrid(new Vector2(x, y), (y == buildSelection.y - 1) ? canBuildUp : canBuild);
-            }
-        }
-
+        structureSize = structure.size;
         building = true;
+
+        buildMeshCreator.CreatePlane((int)structureSize.x, (int)structureSize.y);
     }
 
     void Update() {
@@ -41,21 +42,60 @@ public class BuildManager : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100, terrain)) {
-            Vector3 point = hit.point;
+        if (!Physics.Raycast(ray, out hit, 100, terrain)) 
+            return;
 
-            point.x = (int)point.x;
-            point.z = (int)point.z;
+        Vector3 point = hit.point;
 
-            if (structure.size.x % 2 == 0) {
-                point.x += .5F;
+        point.x -= (structureSize.x / 2f);
+        point.z -= (structureSize.y / 2f);
+
+        point.x = Mathf.RoundToInt(point.x);
+        point.z = Mathf.RoundToInt(point.z);
+
+        transform.position = point;
+
+        canBuild = true;
+        for (int x = 0; x < structureSize.x; x++) {
+            for (int y = 0; y < structureSize.y; y++) {
+                Vector3 worldPos = point + new Vector3(x + 0.5f, 0, y + 0.5f);
+
+                if (Physics.CheckSphere(worldPos, .49f, noBuild)) {
+                    buildMeshCreator.UpdateGrid(new Vector2(x, y), (y == structureSize.y - 1) ? disallowBuildUp : disallowBuild);
+                    canBuild = false;
+                } else {
+                    buildMeshCreator.UpdateGrid(new Vector2(x, y), (y == structureSize.y - 1) ? allowBuildUp : allowBuild);
+                }
             }
-
-            if (structure.size.y % 2 == 0) {
-                point.z += .5F;
-            }
-
-            transform.position = point;
         }
+
+        if (canBuild && Input.GetButtonDown("Fire1")) {
+            EndBuild();
+        }
+    }
+
+    void EndBuild() {
+        building = false;
+        buildMeshCreator.meshFilter.mesh = null;
+
+        Debug.Log("[BuildManager] Finishing building of: " + this.structure.displayName);
+
+        Structure structure = Network.Instantiate(this.structure, transform.position, Quaternion.identity, 0) as Structure;
+        player.CallStructureBuild(structure);
+    }
+
+    void OnDrawGizmosSelected() {
+        if (!building)
+            return;
+
+        for (int x = 0; x < structureSize.x; x++) {
+            for (int y = 0; y < structureSize.y; y++) {
+                Vector3 worldPos = transform.position + new Vector3(x + 0.5f, 0, y + 0.5f);
+
+                Gizmos.color = Color.green;
+                Gizmos.DrawSphere(worldPos, .49f);
+            }
+        }
+
     }
 }

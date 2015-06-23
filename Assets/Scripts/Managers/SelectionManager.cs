@@ -29,16 +29,18 @@ public class SelectionManager : MonoBehaviour {
             RaycastHit hit;
 
             Physics.Raycast(ray, out hit);
-            Unit _unit = hit.collider.gameObject.GetComponent<Unit>();
-            if (_unit)
+
+            ISelectable _selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+            if (_selectable != null)
             {
-                Debug.Log("Unit hit " + _unit.name);
-                //needs team check.
-                //if(_unit.team.Equals()) check if clicked unit belongs to player
+                //Checks if units belongs to players team.
+                //_selectable.GetRTSObject
 
             }
         }
+    }
 
+    public void UnitClick() {
 
     }
 	
