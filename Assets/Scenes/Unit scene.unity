@@ -203,6 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   techName: 
   displayName: 
+  team: 0
   image: {fileID: 0}
   baseDamage: 0
   baseMovementSpeed: 0

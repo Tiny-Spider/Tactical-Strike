@@ -9,4 +9,6 @@ public interface ISelectable{
     void Select();
 
     void AddToSelection();
+
+    RTSObject GetRTSObject();
 }
