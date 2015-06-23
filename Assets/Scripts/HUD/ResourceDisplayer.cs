@@ -14,13 +14,16 @@ public class ResourceDisplayer : MonoBehaviour {
 	}
 
     void OnDestroy() {
-        Player player = GameManager.instance.game.GetPlayer();
-
-        player.OnResourcesChanged -= Refresh;
+        if (GameManager.instance && GameManager.instance.game != null) {
+            Player player = GameManager.instance.game.GetPlayer();
+            player.OnResourcesChanged -= Refresh;
+        }
     }
 
     void Refresh() {
         Player player = GameManager.instance.game.GetPlayer();
+
+        Debug.Log("[ResourceDisplayer] Refresh");
 
         foreach (var resourceAmount in player.GetResources()) {
             foreach (ResourceDisplay resourceDisplay in resourceDisplays) {

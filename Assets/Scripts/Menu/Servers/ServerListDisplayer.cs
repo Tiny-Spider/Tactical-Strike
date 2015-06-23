@@ -35,6 +35,8 @@ public class ServerListDisplayer : MonoBehaviour {
 
         Clear();
 
+        Debug.Log("[ServerListDisplayer] Refresh");
+
         int current = 0;
 
         foreach (HostData server in serverList) {

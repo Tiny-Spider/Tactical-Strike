@@ -4,9 +4,6 @@ using System.Collections;
 public class BuildManager : MonoBehaviour {
     public BuildMeshCreator buildMeshCreator;
 
-    public delegate void StructureBuildEvent(Structure structure);
-    public event StructureBuildEvent OnStructureBuild = delegate { };
-
     public LayerMask noBuild;
     public LayerMask terrain;
 
@@ -20,6 +17,13 @@ public class BuildManager : MonoBehaviour {
 
     private bool building = false;
     private bool canBuild = false;
+
+
+    private Player player;
+
+    void Start() {
+        player = GameManager.instance.game.GetPlayer();
+    }
 
     public void StartBuild(Structure structure) {
         Debug.Log("[BuildManager] Starting building of: " + structure.displayName);
@@ -74,8 +78,10 @@ public class BuildManager : MonoBehaviour {
         building = false;
         buildMeshCreator.meshFilter.mesh = null;
 
+        Debug.Log("[BuildManager] Finishing building of: " + this.structure.displayName);
+
         Structure structure = Network.Instantiate(this.structure, transform.position, Quaternion.identity, 0) as Structure;
-        OnStructureBuild(structure);
+        player.CallStructureBuild(structure);
     }
 
     void OnDrawGizmosSelected() {

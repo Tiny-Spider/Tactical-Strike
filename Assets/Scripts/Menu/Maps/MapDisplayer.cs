@@ -36,6 +36,8 @@ public class MapDisplayer : MonoBehaviour {
 
         Clear();
 
+        Debug.Log("[MapDisplayer] Refresh");
+
         int current = 0;
 
         foreach (MapData map in maps) {

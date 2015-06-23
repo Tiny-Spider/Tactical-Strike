@@ -13,6 +13,11 @@ public class BuildDisplayer : MonoBehaviour {
 
     void Start() {
         Refresh();
+
+        Player player = GameManager.instance.game.GetPlayer();
+
+        player.OnResourcesChanged += Refresh;
+        player.OnStructureBuild += Refresh;
     }
 
     void Clear() {
@@ -23,8 +28,15 @@ public class BuildDisplayer : MonoBehaviour {
         }
     }
 
+
+    void Refresh(Structure structure) {
+        Refresh();
+    }
+
     void Refresh() {
         Clear();
+
+        Debug.Log("[BuildDisplayer] Refresh");
 
         Game game = GameManager.instance.game;
         Player player = game.GetPlayer();

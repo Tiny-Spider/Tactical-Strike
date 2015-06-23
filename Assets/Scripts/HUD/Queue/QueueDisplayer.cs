@@ -32,6 +32,8 @@ public class QueueDisplayer : MonoBehaviour {
     void Refresh(Structure structure) {
         Clear();
 
+        Debug.Log("[QueueDisplayer] Refresh");
+
         IQueueHolder holder = structure as IQueueHolder;
         if (holder != null) {
             List<QueueItem> queueItems = holder.GetQueueItems();
