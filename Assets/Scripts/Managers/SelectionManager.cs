@@ -11,7 +11,7 @@ public class SelectionManager : MonoBehaviour {
     [Tooltip("Layers that should get detected by the raycast")]
     public LayerMask SelectionLayers;
 
-    private List<RTSObject> currentSelection;
+    private List<RTSObject> currentSelection = new List<RTSObject>();
     private Dictionary<int, List<RTSObject>> controlGroups = new Dictionary<int,List<RTSObject>>();
     private bool click = false;
 	void Awake()
