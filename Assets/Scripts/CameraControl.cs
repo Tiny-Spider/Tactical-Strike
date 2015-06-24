@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraControl : MonoBehaviour {
     public float screenMovePercentage = 0.1f;
     public float moveSpeed = 1f;
-    public Camera camera;
+    public Camera _camera;
 
     public Vector2 maxConstraints;
     public Vector2 minConstraints;
@@ -34,7 +34,7 @@ public class CameraControl : MonoBehaviour {
         upPixels = Screen.height * screenMovePercentage;
         downPixels = Screen.height * (1.0f - screenMovePercentage);
 
-        normalCameraRot = camera.transform.rotation;
+        normalCameraRot = _camera.transform.rotation;
     }
 
     void Update() {
@@ -71,11 +71,11 @@ public class CameraControl : MonoBehaviour {
 
         if (enableFocusZoom && Input.GetButtonDown("Focus")) {
             if (!focusZoom) {
-                camera.transform.rotation = focusCameraRot;
-                camera.orthographic = true;
+                _camera.transform.rotation = focusCameraRot;
+                _camera.orthographic = true;
             } else {
-                camera.transform.rotation = normalCameraRot;
-                camera.orthographic = false;
+                _camera.transform.rotation = normalCameraRot;
+                _camera.orthographic = false;
             }
 
             focusZoom = !focusZoom;

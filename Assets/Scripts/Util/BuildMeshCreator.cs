@@ -14,7 +14,7 @@ public class BuildMeshCreator : MonoBehaviour {
     [Tooltip("The default tile, normally 0,0")]
     public Vector2 DefaultTile;
 
-    private int _gridWidth;
+    //private int _gridWidth;
     private int _gridHeight;
 
     //private float _gridHalfWidth;
@@ -45,7 +45,7 @@ public class BuildMeshCreator : MonoBehaviour {
     }
 
     public void CreatePlane(int gridWidth, int gridHeight) {
-        _gridWidth = gridWidth;
+        //_gridWidth = gridWidth;
         _gridHeight = gridHeight;
 
         //_gridHalfWidth = _gridWidth / 2.0F;

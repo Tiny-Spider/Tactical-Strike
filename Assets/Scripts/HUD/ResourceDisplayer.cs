@@ -3,40 +3,40 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class ResourceDisplayer : MonoBehaviour {
-    public ResourceDisplay[] resourceDisplays;
+	public ResourceDisplay[] resourceDisplays;
 
 	void Start() {
-        Player player = GameManager.instance.game.GetPlayer();
+		Player player = GameManager.instance.game.GetPlayer();
 
-        player.OnResourcesChanged += Refresh;
+		player.OnResourcesChanged += Refresh;
 
-        Refresh();
+		Refresh();
 	}
 
-    void OnDestroy() {
-        if (GameManager.instance && GameManager.instance.game != null) {
-            Player player = GameManager.instance.game.GetPlayer();
-            player.OnResourcesChanged -= Refresh;
-        }
-    }
-
-    void Refresh() {
-        Player player = GameManager.instance.game.GetPlayer();
-
-        Debug.Log("[ResourceDisplayer] Refresh");
-
-        foreach (var resourceAmount in player.GetResources()) {
-            foreach (ResourceDisplay resourceDisplay in resourceDisplays) {
-                if (resourceDisplay.resourceType == resourceAmount.Key) {
-                    resourceDisplay.valueText.text = resourceAmount.Value.ToString();
-                }
-            }
-        }
+	void OnDestroy() {
+		if (GameManager.instance && GameManager.instance.game != null) {
+			Player player = GameManager.instance.game.GetPlayer();
+			player.OnResourcesChanged -= Refresh;
+		}
 	}
 
-    [System.Serializable]
-    public struct ResourceDisplay {
-        public ResourceType resourceType;
-        public Text valueText;
-    }
+	void Refresh() {
+		Player player = GameManager.instance.game.GetPlayer();
+
+		Debug.Log("[ResourceDisplayer] Refresh");
+
+		foreach (var resourceAmount in player.GetResources()) {
+			foreach (ResourceDisplay resourceDisplay in resourceDisplays) {
+				if (resourceDisplay.resourceType == resourceAmount.Key) {
+					resourceDisplay.valueText.text = resourceAmount.Value.ToString();
+				}
+			}
+		}
+	}
+
+	[System.Serializable]
+	public struct ResourceDisplay {
+		public ResourceType resourceType;
+		public Text valueText;
+	}
 }
