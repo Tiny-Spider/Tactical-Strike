@@ -9,9 +9,9 @@ public class Unit : RTSObject {
 
     private State state;
 
-    public Vector3 targetPosition;
+    public Vector3 targetPosition = Vector3.zero;
     public IDamageable target;
-
+    
     public NavMeshAgent navMeshAgent;
     public Stance stance = Stance.Hold;
     public LayerMask attackableLayer;
@@ -20,7 +20,7 @@ public class Unit : RTSObject {
 
 
     void Awake() {
-        Dictionary<StateType, State> stateDictionary = new Dictionary<StateType,State>();
+        Dictionary<StateType, RealStateType> stateDictionary = new Dictionary<StateType, RealStateType>();
 
         foreach(UnitState state in states) {
             stateDictionary.Add(state.stateType, state.state);
@@ -54,7 +54,7 @@ public class Unit : RTSObject {
         if (state != null)
             state.Exit(this);
 
-        state = RTSObject.states[techName][stateType];
+        state = StateManager.GetState(RTSObject.states[techName][stateType]);
         state.Enter(this);
     }
 
@@ -63,5 +63,5 @@ public class Unit : RTSObject {
 [System.Serializable]
 public struct UnitState {
     public StateType stateType;
-    public State state;
+    public RealStateType state;
 }

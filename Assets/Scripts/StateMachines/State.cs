@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class State {
+public abstract class State : ScriptableObject {
     public abstract void Enter(Unit unit);
 
     public abstract void Update(Unit unit);

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class StateIdle : State {
     public override void Enter(Unit unit) {
-        
+        Debug.Log("[State] Unit \"" + unit.techName + "\" just entered \"StateIdle\" state!");
     }
 
     public override void Update(Unit unit) {

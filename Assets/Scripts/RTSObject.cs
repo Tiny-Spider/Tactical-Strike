@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class RTSObject : MonoBehaviour, IDamageable, ISelectable {
-    public static Dictionary<string, Dictionary<StateType, State>> states = new Dictionary<string, Dictionary<StateType, State>>();
+    public static Dictionary<string, Dictionary<StateType, RealStateType>> states = new Dictionary<string, Dictionary<StateType, RealStateType>>();
 
     public Sprite image;
     public string techName;
