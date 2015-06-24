@@ -3,38 +3,65 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Unit : RTSObject {
-    public List<UnitState> states;
+    public static Dictionary<string, Dictionary<StateType, State<Unit>>> states = new Dictionary<string, Dictionary<StateType, State<Unit>>>();
+    public static Dictionary<string, Dictionary<DamageType, int>> damages = new Dictionary<string, Dictionary<DamageType, int>>();
 
-    public float baseDamage, baseMovementSpeed, baseAttackRange;
+    public UnitStates unitStates;
+    public List<UnitDamage> damage;
 
-    private State state;
+    private StateMachine<Unit> stateMachine;
 
+    //[HideInInspector]
     public Vector3 targetPosition = Vector3.zero;
+    //[HideInInspector]
+    public Vector3 startPosition = Vector3.zero;
     public IDamageable target;
     
     public NavMeshAgent navMeshAgent;
-    public Stance stance = Stance.Hold;
     public LayerMask attackableLayer;
 
     public float attackRange;
-
+    public float viewRange;
+    public float attackSpeed;
+    [HideInInspector]
+    public float nextAttackTime;
 
     void Awake() {
-        Dictionary<StateType, RealStateType> stateDictionary = new Dictionary<StateType, RealStateType>();
+        if (!Unit.damages.ContainsKey(techName)) {
+            Dictionary<DamageType, int> damageDictionary = new Dictionary<DamageType, int>();
 
-        foreach(UnitState state in states) {
-            stateDictionary.Add(state.stateType, state.state);
+            foreach (UnitDamage unitDamage in damage) {
+                damageDictionary.Add(unitDamage.damageType, unitDamage.damageAmount);
+            }
+
+            Unit.damages.Add(techName, damageDictionary);
         }
 
-        RTSObject.states.Add(techName, stateDictionary);
+        if (!Unit.states.ContainsKey(techName)) {
+            Dictionary<StateType, State<Unit>> stateDictionary = new Dictionary<StateType, State<Unit>>();
 
-        SwitchToState(StateType.Idle);
+            stateDictionary.Add(StateType.Idle,     UnitStateManager.GetState(unitStates.idleState));
+            stateDictionary.Add(StateType.Move,     UnitStateManager.GetState(unitStates.moveState));
+            stateDictionary.Add(StateType.Chase,    UnitStateManager.GetState(unitStates.chaseState));
+            stateDictionary.Add(StateType.Attack,   UnitStateManager.GetState(unitStates.attackState));
+            stateDictionary.Add(StateType.Flee,     UnitStateManager.GetState(unitStates.fleeState));
+
+            Unit.states.Add(techName, stateDictionary);
+        }
+
+        stateMachine = new StateMachine<Unit>(this, GetState(StateType.Idle));
+    }
+
+    private State<Unit> GetState(StateType stateType) {
+        return Unit.states[techName][stateType];
+    }
+
+    public Dictionary<DamageType, int> GetDamage() {
+        return Unit.damages[techName];
     }
 
     void Update() {
-        if (state != null) {
-            state.Update(this);
-        }
+        stateMachine.Update();
     }
 
     public void SetTargetPosition(Vector3 targetPosition) {
@@ -46,22 +73,43 @@ public class Unit : RTSObject {
     public void SetTarget(IDamageable target) {
         this.target = target;
 
-        SwitchToState(StateType.Attack);
+        switch (stance) {
+            case Stance.Aggressive:
+            case Stance.Defensive:
+                SwitchToState(StateType.Chase);
+                break;
+            case Stance.Guard:
+                SwitchToState(StateType.Attack);
+                break;
+            default:
+                break;
+        }
     }
 
     public void SwitchToState(StateType stateType) {
-        // For the first time
-        if (state != null)
-            state.Exit(this);
-
-        state = StateManager.GetState(RTSObject.states[techName][stateType]);
-        state.Enter(this);
+        stateMachine.ChangeState(GetState(stateType));
     }
 
+    //Selected
+    void OnDrawGizmos() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, viewRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }
 
 [System.Serializable]
-public struct UnitState {
-    public StateType stateType;
-    public RealStateType state;
+public struct UnitStates {
+    public UnitState idleState;
+    public UnitState moveState;
+    public UnitState chaseState;
+    public UnitState attackState;
+    public UnitState fleeState;
+}
+
+[System.Serializable]
+public struct UnitDamage {
+    public DamageType damageType;
+    public int damageAmount;
 }

@@ -8,7 +8,10 @@ public interface IDamageable {
     int SetHealth(int amount);
     int Heal(int amount);
 
+    bool IsDead();
+
     void Damage(Dictionary<DamageType, int> damage);
+    void Die();
 
     RTSObject GetOwner();
 }

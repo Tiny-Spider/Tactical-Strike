@@ -4,5 +4,7 @@ using System.Collections;
 public enum StateType {
     Idle,
     Move,
-    Attack
+    Chase,
+    Attack,
+    Flee
 }
