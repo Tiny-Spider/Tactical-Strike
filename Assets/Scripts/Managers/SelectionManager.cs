@@ -65,9 +65,9 @@ public class SelectionManager : MonoBehaviour {
     /// <param name="_selectable"></param>
     public void RTSObjectClick(ISelectable _selectable) {
         //Checks if units belongs to players team.
-        if (_selectable.GetRTSObject().team.Equals(GameManager.instance.game.GetPlayer().team)) {
+        if (_selectable.GetOwner().team.Equals(GameManager.instance.game.GetPlayer().team)) {
             currentSelection.Clear();
-            currentSelection.Add(_selectable.GetRTSObject());
+            currentSelection.Add(_selectable.GetOwner());
             Debug.Log("Current selected = " + currentSelection[0]);
         }
     }

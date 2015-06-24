@@ -2,19 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RTSObject : MonoBehaviour, IDamageable, ISelectable{
+public class RTSObject : MonoBehaviour, IDamageable, ISelectable {
+    public static Dictionary<string, Dictionary<StateType, State>> states = new Dictionary<string, Dictionary<StateType, State>>();
 
+    public Sprite image;
     public string techName;
     public string displayName;
     public int team;
 
-    int health;
-    Dictionary<DamageType, int> armor = new Dictionary<DamageType, int>();
-    public Sprite image;
+    public CursorType cursor = CursorType.Normal;
 
-    public int Gethealth() {
-        throw new System.NotImplementedException();
-    }
+    public int health;
+    Dictionary<DamageType, int> armor = new Dictionary<DamageType, int>();
 
     public void Damage(System.Collections.Generic.Dictionary<DamageType, int> damage) {
         throw new System.NotImplementedException();
@@ -25,18 +24,24 @@ public class RTSObject : MonoBehaviour, IDamageable, ISelectable{
     }
 
     public CursorType GetCursorType() {
-        throw new System.NotImplementedException();
+        return cursor;
     }
 
-    public void Select() {
-        throw new System.NotImplementedException();
+    public int Gethealth() {
+        return health;
     }
 
-    public void AddToSelection() {
-        throw new System.NotImplementedException();
+    public int SetHealth(int amount) {
+        health = amount;
+        return Gethealth();
     }
 
-    public RTSObject GetRTSObject() {
-        return this;   
+    public int Heal(int amount) {
+        health += amount;
+        return Gethealth();
+    }
+
+    public RTSObject GetOwner() {
+        return this;
     }
 }
