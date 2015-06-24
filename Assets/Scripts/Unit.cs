@@ -15,7 +15,7 @@ public class Unit: RTSObject {
 	void Start () {
 	    //UnitManager.instance.GetUnitData// hier was ik. op welke manier apply je unit data op de unit?
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	
