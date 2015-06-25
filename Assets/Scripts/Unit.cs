@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 public class Unit : RTSObject {
     public static Dictionary<string, Dictionary<StateType, State<Unit>>> states = new Dictionary<string, Dictionary<StateType, State<Unit>>>();
-    public static Dictionary<string, Dictionary<DamageType, int>> damages = new Dictionary<string, Dictionary<DamageType, int>>();
+    //public static Dictionary<string, Dictionary<DamageType, int>> damages = new Dictionary<string, Dictionary<DamageType, int>>();
 
     public UnitStates unitStates;
     public List<UnitDamage> damage;
 
     private StateMachine<Unit> stateMachine;
+    private Dictionary<DamageType, int> _damage = new Dictionary<DamageType, int>();
 
     //[HideInInspector]
     public Vector3 targetPosition = Vector3.zero;
@@ -20,6 +21,8 @@ public class Unit : RTSObject {
     public NavMeshAgent navMeshAgent;
     public LayerMask attackableLayer;
 
+    public bool debugStates = false;
+
     public float attackRange;
     public float viewRange;
     public float attackSpeed;
@@ -27,14 +30,18 @@ public class Unit : RTSObject {
     public float nextAttackTime;
 
     void Awake() {
-        if (!Unit.damages.ContainsKey(techName)) {
-            Dictionary<DamageType, int> damageDictionary = new Dictionary<DamageType, int>();
+        //if (!Unit.damages.ContainsKey(techName)) {
+        //    Dictionary<DamageType, int> damageDictionary = new Dictionary<DamageType, int>();
 
-            foreach (UnitDamage unitDamage in damage) {
-                damageDictionary.Add(unitDamage.damageType, unitDamage.damageAmount);
-            }
+        //    foreach (UnitDamage unitDamage in damage) {
+        //        damageDictionary.Add(unitDamage.damageType, unitDamage.damageAmount);
+        //    }
 
-            Unit.damages.Add(techName, damageDictionary);
+        //    Unit.damages.Add(techName, damageDictionary);
+        //}
+
+        foreach (UnitDamage unitDamage in damage) {
+            _damage.Add(unitDamage.damageType, unitDamage.damageAmount);
         }
 
         if (!Unit.states.ContainsKey(techName)) {
@@ -57,7 +64,8 @@ public class Unit : RTSObject {
     }
 
     public Dictionary<DamageType, int> GetDamage() {
-        return Unit.damages[techName];
+        return _damage;
+        //return Unit.damages[techName];
     }
 
     void Update() {

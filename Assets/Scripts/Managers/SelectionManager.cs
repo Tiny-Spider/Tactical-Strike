@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SelectionManager : MonoBehaviour {
-
-	public static SelectionManager instance { private set; get; }
+public class SelectionManager : Singleton<SelectionManager> {
 	public delegate void StructureSelectEvent(Structure structure);
 	public event StructureSelectEvent OnSelectEvent = delegate { };
 
@@ -14,12 +12,8 @@ public class SelectionManager : MonoBehaviour {
     private List<RTSObject> currentSelection = new List<RTSObject>();
     private Dictionary<int, List<RTSObject>> controlGroups = new Dictionary<int,List<RTSObject>>();
     private bool click = false;
-	void Awake()
-	{
-        //needed?
-		instance = this;
 
-
+	void Awake() {
         InitializeControlGroups();
 	}
 
