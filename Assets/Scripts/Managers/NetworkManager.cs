@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(NetworkView))]
 public class NetworkManager : Singleton<NetworkManager> {
-    public static NetworkManager instance { private set; get; }
-
-    public string __yoMamam;
-
     public string gameTypeName;
     public HostData[] serverList;
 
