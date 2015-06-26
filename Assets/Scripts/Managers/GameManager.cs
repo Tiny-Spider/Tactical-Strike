@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
-
-    public static GameManager instance { private set; get; }
-
+public class GameManager : Singleton<GameManager> {
     public Game game { private set; get; }
 
     private readonly string playerNameKey = "PlayerName";
@@ -12,8 +9,6 @@ public class GameManager : MonoBehaviour {
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
-
-        instance = this;
     }
 
     void Start() {

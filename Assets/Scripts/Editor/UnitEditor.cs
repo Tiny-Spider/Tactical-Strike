@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
-public class MyWindow : EditorWindow
-{
+public class MyWindow : EditorWindow {
+    
     string myString = "Hello World";
     bool groupEnabled;
     bool myBool = true;

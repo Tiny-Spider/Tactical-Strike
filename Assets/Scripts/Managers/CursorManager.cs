@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CursorManager : MonoBehaviour {
+public class CursorManager : Singleton<CursorManager> {
 
     Dictionary<CursorType, Texture2D> cursors = new Dictionary<CursorType, Texture2D>();
 	// Use this for initialization

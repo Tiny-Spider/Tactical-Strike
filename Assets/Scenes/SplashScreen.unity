@@ -461,6 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09fb4a50c272c94dbf91cc0c4d92a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  __yoMamam: 
   gameTypeName: _TacticalStrike
   clientScene: 0
   serverScene: 0

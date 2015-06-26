@@ -10,6 +10,7 @@ public class StateMove : State<Unit> {
     }
 
     public override void Enter(Unit unit) {
+        if (unit.debugStates)
         Debug.Log("[State] Unit \"" + unit.techName + "\" switched to \"StateMove\"");
         unit.navMeshAgent.SetDestination(unit.targetPosition);
     }
@@ -26,7 +27,7 @@ public class StateMove : State<Unit> {
 
         switch (unit.stance) {
             case Stance.Aggressive:
-                Collider[] colliders = Physics.OverlapSphere(unit.transform.position, unit.attackRange, unit.attackableLayer);
+                Collider[] colliders = Physics.OverlapSphere(unit.transform.position, unit.viewRange - unit.navMeshAgent.radius, unit.attackableLayer);
 
                 foreach (Collider collider in colliders) {
                     IDamageable iDamageable = collider.GetComponent<IDamageable>();

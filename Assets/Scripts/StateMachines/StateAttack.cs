@@ -10,6 +10,7 @@ public class StateAttack : State<Unit> {
     }
 
     public override void Enter(Unit unit) {
+        if (unit.debugStates)
         Debug.Log("[State] Unit \"" + unit.techName + "\" switched to \"StateAttack\"");
     }
 

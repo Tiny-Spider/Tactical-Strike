@@ -10,11 +10,12 @@ public class StateChase : State<Unit> {
     }
 
     public override void Enter(Unit unit) {
+        if (unit.debugStates)
         Debug.Log("[State] Unit \"" + unit.techName + "\" switched to \"StateChase\"");
     }
 
     public override void Execute(Unit unit) {
-        if (unit.target.IsDead()) {
+        if (unit.target == null || unit.target.GetOwner() == null || unit.target.GetOwner().transform == null || unit.target.IsDead()) {
             switch (unit.stance) {
                 case Stance.Defensive:
                     unit.SetTargetPosition(unit.startPosition);
@@ -23,9 +24,14 @@ public class StateChase : State<Unit> {
                     unit.SwitchToState(StateType.Idle);
                     break;
             }
+
+            return;
         }
 
-        if (Vector3.Distance(unit.transform.position, unit.target.GetOwner().transform.position) < unit.attackRange) {
+        Vector3 myPosition = unit.transform.position;
+        Vector3 targetPosition = unit.target.GetOwner().transform.position;
+
+        if (Vector3.Distance(myPosition, targetPosition) < unit.attackRange) {
             unit.SwitchToState(StateType.Attack);
         } else {
             unit.navMeshAgent.SetDestination(unit.target.GetOwner().transform.position);

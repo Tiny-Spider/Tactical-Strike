@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(NetworkView))]
-public class NetworkManager : MonoBehaviour {
+public class NetworkManager : Singleton<NetworkManager> {
     public static NetworkManager instance { private set; get; }
+
+    public string __yoMamam;
 
     public string gameTypeName;
     public HostData[] serverList;
@@ -30,7 +32,6 @@ public class NetworkManager : MonoBehaviour {
     private NetworkView _networkView;
 
     void Awake() {
-        instance = this;
         _networkView = GetComponent<NetworkView>();
     }
 

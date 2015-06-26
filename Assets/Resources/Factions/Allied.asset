@@ -17,3 +17,9 @@ MonoBehaviour:
   - structure: {fileID: 11424460, guid: 863e6afc56a0f524da69941e551aea28, type: 2}
     cost: []
     requiredStructures: []
+  - structure: {fileID: 11461938, guid: ba3a860a61395a941ae8b548e35a4c99, type: 2}
+    cost: []
+    requiredStructures: []
+  - structure: {fileID: 11418112, guid: 556f2ad08f94140438e2e9553492dd66, type: 2}
+    cost: []
+    requiredStructures: []
