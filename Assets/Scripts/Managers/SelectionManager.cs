@@ -78,5 +78,12 @@ public class SelectionManager : MonoBehaviour {
     public void SelectControlGroup() {
         //Used
     }
+
+    public void NewCurrentselection(RTSObject[] _RTSObjects) {
+        currentSelection.Clear();
+        foreach(RTSObject _object in _RTSObjects){
+            currentSelection.Add(_object);
+        }
+    }
 	
 }
